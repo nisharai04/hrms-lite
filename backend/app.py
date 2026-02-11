@@ -2,7 +2,8 @@ import os
 import re
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from models import db, Employee, Attendance
+from backend.models import db, Employee, Attendance
+
 
 # ---------------------------------
 # PATH SETUP

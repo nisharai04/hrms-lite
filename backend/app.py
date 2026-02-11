@@ -4,7 +4,6 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from backend.models import db, Employee, Attendance
 
-
 # ---------------------------------
 # PATH SETUP
 # ---------------------------------
@@ -33,12 +32,20 @@ with app.app_context():
     db.create_all()
 
 # ---------------------------------
-# FRONTEND ROUTES
+# FRONTEND PAGE ROUTES
 # ---------------------------------
 
 @app.route("/")
 def index():
-    return send_from_directory(app.static_folder, "index.html")
+    return send_from_directory(FRONTEND_DIR, "index.html")
+
+@app.route("/employees-page")
+def employees_page():
+    return send_from_directory(FRONTEND_DIR, "employees.html")
+
+@app.route("/attendance-page")
+def attendance_page():
+    return send_from_directory(FRONTEND_DIR, "attendance.html")
 
 # ---------------------------------
 # HELPER
@@ -104,6 +111,7 @@ def delete_employee(id):
     db.session.commit()
     return jsonify({"message": "Employee deleted"}), 200
 
+
 # =================================
 # ATTENDANCE APIs
 # =================================
@@ -138,6 +146,7 @@ def get_attendance(employee_id):
         {"date": r.date, "status": r.status}
         for r in records
     ]), 200
+
 
 # ---------------------------------
 # RUN SERVER
